@@ -10,10 +10,6 @@ app.debug = True
 def home():
     return render_template('index.html')
 
-@app.route("/Log_In")
-def LogIn():
-    return render_template('Log_In.html')
-
 @app.route("/Register")
 def Register():
     return render_template('Register.html')
@@ -24,7 +20,8 @@ def signin():
     password = request.form['password']
     if username and password:
         if validateUser(username, password):
-            return render_template('MainPage.html')
+            print("Log in as " + username + ", " + password)
+            return render_template('Main.html')
 
 
 @app.route("/register", methods=['POST'])
@@ -34,20 +31,22 @@ def register():
     password = request.form['password']
     cpassword = request.form['Cpassword']
     if request.method == 'POST' and cpassword == password:
-        with open('nopol.txt', 'w') as f:
+        with open('nopol.txt', 'a') as f:
             print("writing")
-            txt1 = "{fname}:{password}".format(fname=username, password=password)
+            txt1 = "{fname}:{password}:".format(fname=username, password=password)
             f.write(txt1)
 
-    return render_template('Index.html')
+    return render_template('index.html')
 
 def validateUser(username, password):
     f = open('nopol.txt')
     l = []
+    i = 0
     for line in f:
         l = line.split(":")
-        if username == l[0] and password == l[1]:
+        if username == l[i] and password == l[i + 1]:
             return True
+        i += 2
 
     return False
     
