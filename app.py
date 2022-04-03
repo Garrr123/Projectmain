@@ -19,7 +19,7 @@ def setup():
     global amk_graph
     global driver_list
     global customer_list
-    amk_graph = amk_graph()
+    amk_graph = AMK_Graph()
     with open('customer.txt', 'r') as f:
         line = f.readline()
         line = f.readline()
