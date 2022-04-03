@@ -26,14 +26,15 @@ def setup():
         line = f.readline()
         while(line != ""):
             id, name = line.split(',')
-            customer_list.append(Customer(id, name) )
+            customer_list.append(Customer(id, name))
             line = f.readline()
     with open('drivers.txt', 'r') as f:
         line = f.readline()
         line = f.readline()
         while(line != ""):
             id,name,license_plate,cartype,seats,luggage_limit = line.split(',')
-            location = list(amk_graph.nodes_dict.keys())[random.randint((0,len(amk_graph.nodes_dict)+ 1))]
+            location = list(amk_graph.nodes_dict.keys())[random.randint(0,len(amk_graph.nodes_dict))]
+
             driver_list.append(Driver(id,name,license_plate,cartype,location,seats,luggage_limit) )
             line = f.readline()
 
