@@ -1,10 +1,16 @@
 from flask import Flask, request, json
 from flask import render_template
+from AppObjects import *
 
 app = Flask(__name__)
 app.debug = True
 
-
+customer_list = []
+driver_list = []
+journey_list = []
+transaction_No = 0
+amk_graph = {}
+journey_dict = {}
 
 @app.route("/")
 def home():
@@ -31,7 +37,7 @@ def register():
     password = request.form['password']
     cpassword = request.form['Cpassword']
     if request.method == 'POST' and cpassword == password:
-        with open('nopol.txt', 'a') as f:
+        with open('customer.txt', 'a') as f:
             print("writing")
             txt1 = "{fname}:{password}:".format(fname=username, password=password)
             f.write(txt1)
@@ -39,7 +45,7 @@ def register():
     return render_template('index.html')
 
 def validateUser(username, password):
-    f = open('nopol.txt')
+    f = open('customer.txt')
     l = []
     i = 0
     for line in f:
@@ -51,3 +57,24 @@ def validateUser(username, password):
     return False
     
 
+def setup( ):
+    global amk_graph
+    global driver_list
+    global customer_list
+    amk_graph = amk_graph()
+
+
+    return
+
+
+def book():
+    global transaction_No
+    transaction_No += 1
+
+    return
+
+def cancel(journey_id):
+    return
+
+def complete(journey_id):
+    return
