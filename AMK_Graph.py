@@ -15,7 +15,7 @@ class AMK_Graph:
 
         import pickle
         with open('AMK_NODES.pkl', 'rb') as handle:
-            self.amk_dict = pickle.load(handle)
+            self.nodes_dict = pickle.load(handle)
 
         self.nodes_list = []
         nodes_to_delete = []
@@ -69,7 +69,6 @@ class AMK_Graph:
                 closest = str(i[0]) + ',' + str(i[1])
                 min_dist = dist_start
         return closest
-
 
 ## Minimum Priority Queue Class , Required for shortest path algorithm
 class myMinPQ():

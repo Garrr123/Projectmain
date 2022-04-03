@@ -28,7 +28,7 @@ def setup():
             id, name = line.split(',')
             customer_list.append(Customer(id, name) )
             line = f.readline()
-    with open('drivers.txt.txt', 'r') as f:
+    with open('drivers.txt', 'r') as f:
         line = f.readline()
         line = f.readline()
         while(line != ""):
