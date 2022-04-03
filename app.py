@@ -1,6 +1,9 @@
 from flask import Flask, request, json
 from flask import render_template
 from AppObjects import *
+import random
+
+random.seed(42)
 
 app = Flask(__name__)
 app.debug = True
@@ -12,6 +15,28 @@ transaction_No = 0
 amk_graph = {}
 journey_dict = {}
 
+def setup():
+    global amk_graph
+    global driver_list
+    global customer_list
+    amk_graph = amk_graph()
+    with open('customer.txt', 'r') as f:
+        line = f.readline()
+        line = f.readline()
+        while(line != ""):
+            id, name = line.split(',')
+            customer_list.append(Customer(id, name) )
+            line = f.readline()
+    with open('drivers.txt.txt', 'r') as f:
+        line = f.readline()
+        line = f.readline()
+        while(line != ""):
+            id,name,license_plate,cartype,seats,luggage_limit = line.split(',')
+            location = list(amk_graph.keys())[random.randint((0,len(amk_graph)+ 1))]
+            driver_list.append(Driver(id,name,license_plate,cartype,location,seats,luggage_limit) )
+            line = f.readline()
+
+setup()
 @app.route("/")
 def home():
     return render_template('index.html')
@@ -57,15 +82,6 @@ def validateUser(username, password):
     return False
     
 
-def setup( ):
-    global amk_graph
-    global driver_list
-    global customer_list
-    amk_graph = amk_graph()
-
-
-    return
-
 
 def book():
     global transaction_No
@@ -78,3 +94,4 @@ def cancel(journey_id):
 
 def complete(journey_id):
     return
+
