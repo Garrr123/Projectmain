@@ -15,6 +15,7 @@ transaction_No = 0
 amk_graph = {}
 journey_dict = {}
 
+
 def setup():
     global amk_graph
     global driver_list
@@ -32,7 +33,7 @@ def setup():
         line = f.readline()
         while(line != ""):
             id,name,license_plate,cartype,seats,luggage_limit = line.split(',')
-            location = list(amk_graph.keys())[random.randint((0,len(amk_graph)+ 1))]
+            location = list(amk_graph.nodes_dict.keys())[random.randint((0,len(amk_graph)+ 1))]
             driver_list.append(Driver(id,name,license_plate,cartype,location,seats,luggage_limit) )
             line = f.readline()
 
