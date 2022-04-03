@@ -1,5 +1,5 @@
 id,name,license_plate,cartype,seats,luggage_limit
-1,Bob,abc-123,car,15
-2,Mary,efg-123,car,3,20
+1,Bob,abc-123,car,4,15
+2,Mary,efg-123,car,4,20
 3,Jacob,hij-123,truck,4,25
 4,Marley,xyz-123,truck,5,30
