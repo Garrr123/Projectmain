@@ -11,9 +11,13 @@ app.debug = True
 customer_list = []
 driver_list = []
 journey_list = []
-transaction_No = 0
+journey_No = 0
 amk_graph = {}
 journey_dict = {}
+busy_customer = []
+busy_driver = []
+sharing_journey = []
+lone_journey = []
 
 
 def setup():
@@ -84,15 +88,61 @@ def validateUser(username, password):
     return False
     
 
+def book(user_id ,start, end ,cartype,seats = 1 , luggage_req =0 , sharing = False ,distance_limit = 300):
+    global journey_No
+    global driver_list
+    global customer_list
+    global busy_customer
+    global busy_driver
+    global amk_graph
+    global sharing_journey
+    global lone_journey
+    booking = Booking(user_id ,start, end ,cartype,seats , luggage_req , sharing ,distance_limit )
+    ##if sharing:
 
-def book():
-    global transaction_No
-    transaction_No += 1
+    start_lat_long = getLat_Long(api_Search(start))
+    end_lat_long = getLat_Long(api_Search(end))
+    if start_lat_long is None or end_lat_long is None:
+        return False
 
-    return
+    ## looking for drivers that fit
+    fit_drivers = []
+    for i in driver_list:
+        if booking.car_fit(i):
+            fit_drivers.append(i)
 
-def cancel(journey_id):
-    return
+    if len(fit_drivers) == 0:
+        return False
+    closest_driver = None
+    shortest_dist = 999999999
+    lat_start, lng_start = float(start_lat_long['lat']), float(start_lat_long['long'])
+
+    ## Find nearest driver
+    for j in fit_drivers:
+        lat_driver, lng_driver = [ float(x) for x in j.location.split(',')]
+        dist = distance(lat_driver, lng_driver, lat_start, lng_start ) * 1000
+        if dist < shortest_dist:
+            closest_driver = j
+            shortest_dist = dist
+
+    ## Find path
+    path = amk_graph.findpath(start, end)
+    ## Get path map
+    map = get_route_map(path,
+                        [amk_graph.get_nearest_node(start)],
+                        amk_graph.get_nearest_node(end))
+
+    time = amk_graph.get_path_distance(path)
+    dist = amk_graph.get_path_duration(path)
+    trip  = Journey(journey_No,booking, closest_driver.id,closest_driver.seats - seats,path
+                                ,map,dist,time, closest_driver.seats -seats )
+    if sharing:
+      sharing_journey.append(trip)
+    else:
+      lone_journey.append(trip)
+    journey_No += 1
+
+    return True
 
 def complete(journey_id):
     return

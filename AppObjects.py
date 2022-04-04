@@ -9,10 +9,10 @@ class Driver:
     def __init__(self,id , name , license_plate ,cartype, location, seats = 4  ,Luggage_limit =20  ):
         self.id = id
         self.name = name
-        self.carType = cartype
-        self.seats = seats
+        self.cartype = cartype
+        self.seats = int(seats)
         self.location = location
-        self.luggage_weight =Luggage_limit
+        self.luggage_weight =float(Luggage_limit)
         self.license_plate  = license_plate
 
 
@@ -22,10 +22,10 @@ class Booking:
         self.user_id = user_id
         self.start = start
         self.end  = end
-        self.sharing = sharing
-        self.luggage_weight = luggage_req
-        self.distance_limit = distance_limit
-        self.seats = seats
+        self.sharing = bool(sharing)
+        self.luggage_weight = float(luggage_req)
+        self.distance_limit = float(distance_limit)
+        self.seats = int(seats)
 
     def car_fit(self, comparison):
         if self.cartype == comparison.cartype:
@@ -47,7 +47,7 @@ class Booking:
 
 
 class Journey:
-    def __init__(self ,id ,booking,driver_id,  seats,path ,map , luggage =0 ):
+    def __init__(self ,id ,booking,driver_id,  seats,path ,map ,distance, time , luggage =0 ):
         self.id = id
         self.cartype = booking.cartype
         self.driver_id = driver_id
@@ -55,15 +55,19 @@ class Journey:
         self.start = [booking.start]
         self.end  = booking.end
         self.sharing = booking.sharing
-        self.luggage = luggage
-        self.seats = seats
+        self.luggage_weight = luggage
+        self.seats = int(seats)
         self.path = path
         self.map = map
+        self.dist = float(distance)
+        self.time  = float(time)
 
-    def update(self, user_id, start, seats , map,luggage = 0):
+    def update(self, user_id, start, seats , map, distance, time, luggage = 0):
         self.user_id.append(user_id)
-        self.start.appned(start)
-        self.seats = self.seats - seats
-        self.luggage = self.luggage - luggage
+        self.start.append(start)
+        self.seats = self.seats - int(seats)
+        self.luggage_weight = self.luggage_weight - float(luggage)
         self.map = map
+        self.dist = float(distance)
+        self.time = float(time)
 

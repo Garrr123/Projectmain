@@ -28,6 +28,19 @@ class AMK_Graph:
         for i in nodes_to_delete:
             self.nodes_dict.pop(i)
 
+    def get_path_distance(self, path):
+        distance = 0
+        for i in range(len(path)-1):
+            distance += self.nodes_dict[path[i]][path[i+1]][0]
+        return distance
+
+    def get_path_duration(self, path):
+        time = 0
+        for i in range(len(path)-1):
+            time += self.nodes_dict[path[i]][path[i+1]][1]
+        return time
+
+
     def findpath(self,start, end):
         ## get start coordinates
         start_loc = api_Search(start)
@@ -61,6 +74,8 @@ class AMK_Graph:
 
     def get_nearest_node(self,address):
         lat_long = getLat_Long(api_Search(address))
+        if lat_long ==None :
+            return None
         closest = ""
         min_dist = 999999999
         for i in self.nodes_list:
@@ -144,7 +159,6 @@ class shortest_path:
             path.append(temp)
 
         path.append(self.start)
-        path.append(self.distTo[self.end])
         path.reverse()
         return path
 
@@ -213,13 +227,13 @@ def get_location_map(point):
     result = Image.open(BytesIO(result.content))
     return result
 
-def get_route_map(path, points):
+def get_route_map(path, start ,end):
     midpoint = (len(path) + 1) // 2
     marks = ""
-    for id, x in enumerate(points):
-        marks = marks + "[" + x[0] + ",\"255,255,178\",\"S" + "\"]|[" + x[1] + ",\"255,255,178\",\"E" + "\"]|"
+    for id, x in enumerate(start):
+        marks = marks + "[" + x + ",\"255,255,178\",\"S" + "\"]|"
 
-    marks = marks[:-1]
+    marks = marks + "[" + end + ",\"255,255,178\",\"E" + "\"]"
 
     text_path = string_pointList(path) + ":255,40,40:3"
 
@@ -235,9 +249,14 @@ def get_route_map(path, points):
 def string_pointList(path):
     str_path = "["
     for i in path:
-        if isinstance(i, float):
-            continue
-        else:
-            str_path = str_path + "[" + str(i) + "],"
+        str_path = str_path + "[" + str(i) + "],"
     str_path = str_path[:-1] + "]"
     return str_path
+
+
+def get_address_list(query):
+  result = api_Search(query)
+  if len( result['results']) == 0:
+    return None
+  return [i['ADDRESS']for i in result['results']]
+
