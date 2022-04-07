@@ -19,6 +19,7 @@ busy_driver = {}
 sharing_journey = {}
 lone_journey = {}
 token = None
+journey_choice = []
 
 
 def setup():
