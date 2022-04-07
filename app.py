@@ -19,7 +19,7 @@ busy_driver = {}
 sharing_journey = {}
 lone_journey = {}
 token = None
-
+journey_choice = []
 
 def setup():
     global amk_graph
@@ -59,8 +59,17 @@ def gotoBook():
 
 @app.route("/Booking", methods=['POST' , 'GET'])
 def BookPage():
+
+    global lone_journey
+    global journey_No
     global driver_dict
     global customer_dict
+    global busy_customer
+    global busy_driver
+    global amk_graph
+    global sharing_journey
+    global lone_journey
+    global journey_choice
 
     name = request.form.get("info")
     field = request.form.get("Field")
@@ -74,8 +83,20 @@ def BookPage():
 
     print(name ,field, S_Location, E_Location, Luggage_Size, Limit, Car_Type, Sharable,Seat_Number)
     print("Thank you")
-    return render_template('Main.html')
+    sharing = True if Sharable == "Y" else False
+    c = 0 if Limit is None else float(Limit)
+    results = book( name, S_Location, E_Location, Car_Type, int(Seat_Number), float(Luggage_Size), sharing,float(Limit))
 
+    lone_journey[list(lone_journey.keys())[0]].display()
+
+    if isinstance(results, bool):
+        if sharing and results:
+            ## POP UP Here
+            return render_template('Main.html')
+    else:
+        ## errors
+        print(results)
+    return render_template('Main.html')
 
 
 def book(user_id, start, end, cartype, seats=1, luggage_req=0, sharing=False, distance_limit=300):
@@ -87,6 +108,8 @@ def book(user_id, start, end, cartype, seats=1, luggage_req=0, sharing=False, di
     global amk_graph
     global sharing_journey
     global lone_journey
+    global journey_choice
+
     booking = Booking([user_id], [start], end, cartype, seats, luggage_req, sharing, distance_limit)
     ##if sharing:
 
@@ -94,7 +117,7 @@ def book(user_id, start, end, cartype, seats=1, luggage_req=0, sharing=False, di
     end_lat_long = getLat_Long(api_Search(end))
     if start_lat_long is None or end_lat_long is None:
         print(start_lat_long, end_lat_long)
-        return False
+        return "Invalid Start or End Address"
 
     ## looking for drivers that fit
     fit_drivers = []
@@ -104,7 +127,7 @@ def book(user_id, start, end, cartype, seats=1, luggage_req=0, sharing=False, di
 
     if len(fit_drivers) == 0 and sharing is False:
         print("no match")
-        return False
+        return "No Available cars"
 
     closest_driver = None
     shortest_dist = 999999999
@@ -195,7 +218,7 @@ def book(user_id, start, end, cartype, seats=1, luggage_req=0, sharing=False, di
 
         if sj_Exist:
             print("have SJ")
-            return journey_choice
+            return True
         elif len(fit_drivers) > 0:
             print("no sj but have driver")
             busy_customer[user_id] = customer_dict.pop(user_id)
@@ -204,10 +227,10 @@ def book(user_id, start, end, cartype, seats=1, luggage_req=0, sharing=False, di
             sharing_journey[trip.id] = trip
             return True
         else:
-            print("no driver")
-            return False
+            return "No available drivers"
 
     else:
+        print(trip.id)
         lone_journey[trip.id] = trip
 
     print("end")
@@ -238,6 +261,24 @@ def complete(journey_id, sharing):
 
   driver_dict[journey.driver_id] = busy_driver.pop(journey.driver_id)
   driver_dict[journey.driver_id].location = api_reverse_latLong(amk_graph.get_nearest_node(journey.end), token)
+
+
+  return True
+
+def sharing_choice(index):
+  global journey_choice
+  global sharing_journey
+  journey =journey_choice[index]
+  if index == 0:
+    if journey is not None:
+      busy_customer[journey.user_id[-1]] = customer_dict.pop(journey.user_id[-1])
+      busy_driver[journey.driver_id] = driver_dict.pop(journey.driver_id)
+      sharing_journey[journey.id] = journey_choice[0]
+  else:
+    for i in sharing_journey.values():
+      if i.driver_id == journey.driver_id:
+        sharing_journey.pop(i.id)
+    sharing_journey[journey.id] = journey
 
 
   return True
