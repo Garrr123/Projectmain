@@ -83,7 +83,13 @@
   </head>
   <body>
 
-        <div class="btn-group"> <h1> test</h1>
+        <select name= info method="GET" action="/">
+            {% for info in user %}
+            <option value= "{{info.id}}" SELECTED>{{info.name}}</option>"
+            {% endfor %}
+        </select>
+
+        <div class="btn-group">
             <button class="button">Book</button><br />
             <button class="button">Journey</button><br />
             <button class="button">Users</button><br />

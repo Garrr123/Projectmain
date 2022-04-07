@@ -43,9 +43,9 @@ def setup():
             line = f.readline()
 
 setup()
-@app.route("/")
+@app.route("/" , methods=['GET'])
 def home():
-    return render_template('main.html')
+    return render_template('main.html', user = customer_list , driver = driver_list)
 
 
 
