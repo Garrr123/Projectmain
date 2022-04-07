@@ -47,6 +47,32 @@ setup()
 def home():
     return render_template('main.html', user = customer_list , driver = driver_list)
 
+@app.route('/RenderPage', methods=['POST' , 'GET'])
+def RenderPage():
+    User_Info = request.form.get("UserInfo")
+    case = 0
+    if request.method == 'POST':
+        if request.form['MainPButton'] == 'Book':
+            case = 1
+        elif request.form['MainPButton'] == 'Journey':
+            case = 2
+        elif request.form['MainPButton'] == 'Book':
+            case = 3
+        elif request.form['MainPButton'] == 'Empty':
+            case = 4
+
+    if case == 1:
+        return render_template('Book.html', Pass=User_Info)
+    elif case == 2:
+        return render_template('Journey.html' , Pass = User_Info)
+    elif case == 3:
+        return render_template('Transaction.html' , Pass = User_Info)
+    elif case == 4:
+        return render_template('Empty.html' , Pass = User_Info)
+
+@app.route("/Booking", methods=['POST'])
+def BookPage():
+    return render_template('Main.html')
 
 
 def book(user_id ,start, end ,cartype,seats = 1 , luggage_req =0 , sharing = False ,distance_limit = 300):
