@@ -62,7 +62,7 @@ def RenderPage():
             case = 4
 
     if case == 1:
-        return render_template('Book.html', Pass=User_Info)
+        return render_template('Book.html', Pass=User_Info) # Pass will be the objetct getting from the html
     elif case == 2:
         return render_template('Journey.html' , Pass = User_Info)
     elif case == 3:
