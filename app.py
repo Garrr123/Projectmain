@@ -49,7 +49,7 @@ def setup():
 setup()
 @app.route("/" , methods=['GET'])
 def home():
-    return render_template('main.html', user = customer_list , driver = driver_list)
+    return render_template('main.html', user = customer_dict , driver = driver_dict)
 
 @app.route('/RenderPage', methods=['POST' , 'GET'])
 def RenderPage():
