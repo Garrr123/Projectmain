@@ -5,6 +5,7 @@ import requests
 from PIL import Image
 from io import BytesIO
 import math
+from itertools import permutations
 
 
 class AMK_Graph:
@@ -29,12 +30,16 @@ class AMK_Graph:
             self.nodes_dict.pop(i)
 
     def get_path_distance(self, path):
+        if path[0] == path[1]:
+            return 0
         distance = 0
         for i in range(len(path)-1):
             distance += self.nodes_dict[path[i]][path[i+1]][0]
         return distance
 
     def get_path_duration(self, path):
+        if path[0] == path[1]:
+            return 0
         time = 0
         for i in range(len(path)-1):
             time += self.nodes_dict[path[i]][path[i+1]][1]
@@ -42,6 +47,8 @@ class AMK_Graph:
 
 
     def findpath(self,start, end):
+
+        '''
         ## get start coordinates
         start_loc = api_Search(start)
         start_coords = getLat_Long(start_loc)
@@ -65,8 +72,13 @@ class AMK_Graph:
             if dist_end < end_min:
                 closest_end = [i[0], i[1]]
                 end_min = dist_end
+        '''
 
-        pathFinder = shortest_path(','.join(closest_start), ','.join(closest_end), self.nodes_dict)
+        s_point = self.get_nearest_node(start)
+        e_point = self.get_nearest_node(end)
+        if s_point == e_point:
+            return [s_point, e_point]
+        pathFinder = shortest_path(s_point,e_point, self.nodes_dict)
 
         paths = pathFinder.get_shortest_path()
 
@@ -229,8 +241,8 @@ def get_location_map(point):
 
 def get_route_map(path, start ,end):
     midpoint = (len(path) + 1) // 2
-    marks = ""
-    for id, x in enumerate(start):
+    marks = "[" + start[0] + ",\"255,255,178\",\"D" + "\"]|"
+    for x in start[1:]:
         marks = marks + "[" + x + ",\"255,255,178\",\"S" + "\"]|"
 
     marks = marks + "[" + end + ",\"255,255,178\",\"E" + "\"]"
@@ -260,3 +272,46 @@ def get_address_list(query):
     return None
   return [i['ADDRESS']for i in result['results']]
 
+
+def api_reverse_latLong(point, token):
+    url = "https://developers.onemap.sg/privateapi/commonsvc/revgeocode?location={0}&token={1}&addressType=Roads"
+    x = requests.get(url.format(point, token))
+    result = json.loads(x.text)
+    return result['GeocodeInfo'][0]['ROAD']
+
+
+def shortest_shared_path(car_location, pickups , end, amk_graph):
+  pickup_points = pickups.copy()
+  graph  = {}
+  graph[car_location] = {}
+  graph[end] = {}
+  for i in pickups:
+    graph[i] = {}
+
+  graph[car_location] = {}
+  for i in pickup_points:
+    graph[i].update({end: amk_graph.findpath(i,end)})
+    graph[car_location].update({i: amk_graph.findpath(car_location,i)})
+    for j in pickup_points:
+      if i == j:
+        continue
+      else:
+        graph[i].update({j: amk_graph.findpath(i,j)})
+
+  smallest_amount = 9999999999
+  shortest_path = None
+  perm = list(permutations(pickup_points))
+  for i in perm:
+    curr_path = graph[car_location][i[0]].copy()
+    curr_path.pop()
+    for x in range(len(i)-1) :
+      next_path = graph[i[x]][i[x+1]].copy()
+      next_path.pop()
+      curr_path = curr_path + next_path
+    next_path = graph[i[-1]][end].copy()
+    curr_path =  curr_path + next_path
+    curr_amount = amk_graph.get_path_duration(curr_path)
+    if curr_amount <= smallest_amount:
+      smallest_amount = curr_amount
+      shortest_path = curr_path.copy()
+  return (smallest_amount , shortest_path)

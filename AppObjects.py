@@ -14,6 +14,15 @@ class Driver:
         self.location = location
         self.luggage_weight =float(Luggage_limit)
         self.license_plate  = license_plate
+    def display(self):
+        print("id",self.id )
+        print("name",self.name )
+        print("cartype",self.cartype )
+        print("seats", self.seats)
+        print("seats", self.seats)
+        print("location",self.location )
+        print("luggage_weight",self.luggage_weight )
+        print("license_plate",self.license_plate)
 
 
 class Booking:
@@ -27,6 +36,16 @@ class Booking:
         self.distance_limit = float(distance_limit)
         self.seats = int(seats)
 
+    def display(self):
+        print("cartype",self.cartype )
+        print("user_id",self.user_id )
+        print("start",self.start )
+        print("end",self.end  )
+        print("sharing",self.sharing )
+        print("luggage_weight",self.luggage_weight )
+        print("distance_limit",self.distance_limit)
+        print("seats",self.seats )
+
     def car_fit(self, comparison):
         if self.cartype == comparison.cartype:
             if self.luggage_weight <= comparison.luggage_weight:
@@ -34,31 +53,24 @@ class Booking:
                     return True
         return False
 
-    def journey_fit(self,comparison):
-        if self.car_fit(comparison):
-            comp_end = comparison.end.split(',')
-            j_end = self.end.split(',')
-            dist_diff = distance(float(j_end[0] ), float(j_end[1] ),float(comp_end[0] ),float(comp_end[1] ))
-            if self.distance_limit <= dist_diff:
-                return True
-        return False
 
 
 
 
 class Journey:
-    def __init__(self ,id ,booking,driver_id,  seats,path ,map ,distance, time , luggage =0 ):
+    def __init__(self ,id ,booking,driver_id,  seats,path ,map ,distance, time , driver_location,luggage =0 ):
         self.id = id
         self.cartype = booking.cartype
         self.driver_id = driver_id
-        self.user_id = [booking.user_id]
-        self.start = [booking.start]
+        self.user_id = booking.user_id
+        self.start = booking.start
         self.end  = booking.end
         self.sharing = booking.sharing
         self.luggage_weight = luggage
         self.seats = int(seats)
         self.path = path
         self.map = map
+        self.driver_location = driver_location
         self.dist = float(distance)
         self.time  = float(time)
 
@@ -70,4 +82,21 @@ class Journey:
         self.map = map
         self.dist = float(distance)
         self.time = float(time)
+
+
+    def display(self):
+        print("id", self.id)
+        print("cartype",self.cartype )
+        print(" driver_id",self.driver_id)
+        print("user_id ",self.user_id )
+        print("start",self.start  )
+        print("end",self.end  )
+        print("sharing ",self.sharing )
+        print("luggage_weight ",self.luggage_weight )
+        print("seats",self.seats  )
+        print("path ",self.path )
+        print(" driver_location",self.driver_location  )
+        print(" dist",self.dist  )
+        print("time ",self.time  )
+
 
