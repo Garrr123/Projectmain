@@ -85,9 +85,9 @@
 
   <form action="/Booking" method="post">
 
-  <select name= "UserInfo" method="GET" action="/Booking">
+  <select name= "info" id="UserInfo" method="GET" action="/">
       {% for info in user.values()%}
-          <option value= "{{info.id}}" SELECTED>{{info.name}}</option>"
+          <option value = "{{info.user_id}}" SELECTED>{{info.name}}</option>"
       {% endfor %}
   </select><br>
 
@@ -96,11 +96,14 @@
   <label for="SLocation">Start Location:</label>
   <input type="text " id="SLocation" name = "SLocation" placeholder="Enter your stating location"><br>
   <label for="ELocation">Ending Location:</label>
-  <input type="text " id="ELocation" name = "ELocation" placeholder="Enter your Destination"><br>
+  <input type="text " id="ELocation" name = "Elocation" placeholder="Enter your Destination"><br>
   <label for="LuggageSize">Luggage weight (kg):</label>
   <input type="number " id="LuggageSize"  Name = "LuggageSize" placeholder="Enter your weight of Luggage"><br>
   <label for="DistanceLimit">Distance Limit(meter):</label>
   <input type="number " id="DistanceLimit"  Name = "DistanceLimit" placeholder="Enter your Distance Limit"><br>
+  <label for="SeatNumber">Seat Number:</label>
+  <input type="number " id="SeatNumber"  Name = "Seat" placeholder="1-10"><br>
+
 
   <h6>Car Type :</h6><br>
   <label for="CarT">Car</label>

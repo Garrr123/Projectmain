@@ -57,24 +57,24 @@ def gotoBook():
     return render_template('Book.html' , user = customer_dict , driver = driver_dict)
 
 
-@app.route("/Booking", methods=['POST'])
+@app.route("/Booking", methods=['POST' , 'GET'])
 def BookPage():
     global driver_dict
     global customer_dict
 
-    if request.method == 'POST':
-        name = request.form.get("UserInfo")
-        field = request.form.get("Field")
-        S_Location = request.form.get("SLocation")
-        E_Location = request.form.get("Elocation")
-        Luggage_Size = request.form.get("LuggageSize")
-        Limit = request.form.get("DistanceLimit")
-        Car_Type = request.form.get("CarType")
-        Sharable = request.form.get("Sharable")
+    name = request.form.get("info")
+    field = request.form.get("Field")
+    S_Location = request.form.get("SLocation")
+    E_Location = request.form.get("Elocation")
+    Luggage_Size = request.form.get("LuggageSize")
+    Limit = request.form.get("DistanceLimit")
+    Car_Type = request.form.get("CarType")
+    Sharable = request.form.get("Sharable")
+    Seat_Number = request.form.get("Seat")
 
-        print(name ,field, S_Location, E_Location, Luggage_Size, Limit, Car_Type, Sharable)
-        print("Thank you")
-        return render_template('Main.html')
+    print(name ,field, S_Location, E_Location, Luggage_Size, Limit, Car_Type, Sharable,Seat_Number)
+    print("Thank you")
+    return render_template('Main.html')
 
 
 
