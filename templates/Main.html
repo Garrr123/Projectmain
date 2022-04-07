@@ -14,7 +14,7 @@
 
 
     <!-- Bootstrap core CSS -->
-<link href="/static/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Favicons -->
     <style>
@@ -83,22 +83,26 @@
 
   </head>
   <body>
-
-        <div class="btn-group">
-            <form action="/gotoBook">
-                <input type="submit" value="Book" />
+        <h2 class="mx-auto" style="width: 200px; margin-top:50px; margin-bottom: 200px;">Booking app</h2>
+        <div class="container-fluid">
+          <div class="row mt-1">
+            <form action="/gotoBook" class="col" style="display:grid">
+              <button type="submit" class="btn btn-primary">Book</button>
             </form>
 
-                            <form action="/gotoJourney">
-                <input type="submit" value="Your Journey" />
+            <form action="/gotoJourney" class="col" style="display:grid">
+                <button type="submit" class="btn btn-primary">Your Journey</button>
+            </form>
+          </div>
+          <div class="row mt-1">
+            <form action="/gotoTransaction" class="col" style="display:grid">
+              <button type="submit" class="btn btn-primary">Transaction</button>
             </form>
 
-                 <form action="/gotoTransaction">
-                <input type="submit" value="Transaction" /></form>
-
-                        <form action="/gotoEmpty">
-                <input type="submit" value="wait to implement" />
+            <form action="/gotoEmpty" class="col" style="display:grid">
+                <button type="submit" class="btn btn-primary">wait to implement</button>
             </form>
+          </div>
         </div>
 
 

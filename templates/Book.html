@@ -14,7 +14,7 @@
 
 
     <!-- Bootstrap core CSS -->
-<link href="/static/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+<link href="../static/css/bootstrap.min.css" rel="stylesheet" >
 
     <!-- Favicons -->
     <style>
@@ -82,46 +82,60 @@
 
   </head>
   <body>
-
-  <form action="/Booking" method="post">
-
-  <select name= "info" id="UserInfo" method="GET" action="/">
-      {% for info in user.values()%}
-          <option value = "{{info.user_id}}" SELECTED>{{info.name}}</option>"
-      {% endfor %}
-  </select><br>
-
-  <label for="Field">Field:</label>
-  <input type="text " id="Field" name = "Field" placeholder="Enter your Field"><br>
-  <label for="SLocation">Start Location:</label>
-  <input type="text " id="SLocation" name = "SLocation" placeholder="Enter your stating location"><br>
-  <label for="ELocation">Ending Location:</label>
-  <input type="text " id="ELocation" name = "Elocation" placeholder="Enter your Destination"><br>
-  <label for="LuggageSize">Luggage weight (kg):</label>
-  <input type="number " id="LuggageSize"  Name = "LuggageSize" placeholder="Enter your weight of Luggage"><br>
-  <label for="DistanceLimit">Distance Limit(meter):</label>
-  <input type="number " id="DistanceLimit"  Name = "DistanceLimit" placeholder="Enter your Distance Limit"><br>
-  <label for="SeatNumber">Seat Number:</label>
-  <input type="number " id="SeatNumber"  Name = "Seat" placeholder="1-10"><br>
-
-
-  <h6>Car Type :</h6><br>
-  <label for="CarT">Car</label>
-  <input type="radio" id="CarT" name="CarType" value="car"><br>
-    <label for="TruckT">Truck</label>
-    <input type="radio" id="TruckT" name="CarType" value="truck"><br>
-
-  <h6>Share or Not:</h6><br>
-    <label for="ShareY">Yes</label>
-    <input type="radio" id="ShareY" name="Sharable" value="Y"><br>
-    <label for="ShareN">No</label>
-    <input type="radio" id="ShareN" name="Sharable" value="N"><br>
-
-
-  <input type="submit" id="TransactionForm" name="BookButton"
-         style="width:47%;" class="w3-bar-item w3-button w3-padding-medium w3-blue" \></form>
-
-
+    <h2 class="mx-auto" style="width: max-content;">Booking page</h2>
+    <div class="container-fluid">
+      <form action="/Booking" method="post">
+        <div class="mb-3">
+          <select name= "info" id="UserInfo" method="GET" action="/">
+            {% for info in user.values()%}
+                <option value = "{{info.user_id}}" SELECTED>{{info.name}}</option>"
+            {% endfor %}
+        </select><br>
+        </div>
+        
+        <div class="mb-3">
+          <label for="Field" class="form-label">Field:</label>
+          <input type="text " class="form-control" id="Field" name = "Field" placeholder="Enter your Field">
+        </div>
+        <div class="mb-3">
+          <label for="SLocation" class="form-label">Start Location:</label>
+          <input type="text " class="form-control" id="SLocation" name = "SLocation" placeholder="Enter your stating location">
+        </div>
+        <div class="mb-3">
+          <label for="ELocation" class="form-label">Ending Location:</label>
+          <input type="text " class="form-control" id="ELocation" name = "Elocation" placeholder="Enter your Destination">
+        </div>
+        <div class="mb-3">
+          <label for="LuggageSize" class="form-label">Luggage weight (kg):</label>
+          <input type="number " class="form-control" id="LuggageSize"  Name = "LuggageSize" placeholder="Enter your weight of Luggage">
+        </div>
+        <div class="mb-3">
+          <label for="DistanceLimit" class="form-label">Distance Limit(meter):</label>
+          <input type="number " class="form-control" id="DistanceLimit"  Name = "DistanceLimit" placeholder="Enter your Distance Limit">
+        </div>
+        <div class="mb-3">
+          <label for="SeatNumber" class="form-label">Seat Number:</label>
+          <input type="number " class="form-control" id="SeatNumber"  Name = "Seat" placeholder="1-10">
+        </div>
+        <div class="mb-3">
+          <h6>Car Type :</h6>
+          <label for="CarT" class="form-check-label">Car</label>
+          <input type="radio" id="CarT" name="CarType" value="car" class="form-check-input" checked>
+          <label for="TruckT" class="form-check-label">Truck</label>
+          <input type="radio" id="TruckT" name="CarType" value="truck" class="form-check-input">
+        </div>
+        <div class="mb-3">
+          <h6>Share or Not:</h6>
+          <label for="ShareY" class="form-check-label">Yes</label>
+          <input type="radio" id="ShareY" name="Sharable" value="Y" class="form-check-input" checked>
+          <label for="ShareN" class="form-check-label">No</label>
+          <input type="radio" id="ShareN" name="Sharable" value="N" class="form-check-input">
+        </div>
+          <button type="submit" id="TransactionForm" class="btn btn-primary">BookButton</button>
+      
+      </form>
+    </div>
+  
 
   </body>
 </html>
