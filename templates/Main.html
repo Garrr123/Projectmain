@@ -82,16 +82,12 @@
 
   </head>
   <body>
-        <form action="/RenderPage" method="post">
-        <select name= "UserInfo" method="GET" action="/">
-            {% for info in user %}
-            <option value= "{{info}}" SELECTED>{{info.name}}</option>"
-            {% endfor %}
-        </select>
 
         <div class="btn-group">
-                 <input type="submit" id="BookForm" value="Book" name="MainPButton"
-                        style="width:47%;" class="w3-bar-item w3-button w3-padding-medium w3-blue" \>
+            <form action="/gotoBook">
+                <input type="submit" value="Click Here" />
+            </form>
+
 
                  <input type="submit" id="JourneyForm" value="Journey" name="MainPButton"
                         style="width:47%;" class="w3-bar-item w3-button w3-padding-medium w3-blue" \>
@@ -102,7 +98,6 @@
                  <input type="submit" id="Fill" value="Empty" name="MainPButton"
                         style="width:47%;" class="w3-bar-item w3-button w3-padding-medium w3-blue" \>
         </div>
-        </form>
 
 
 

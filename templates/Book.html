@@ -84,13 +84,36 @@
   <body>
 
   <form action="/Booking" method="post">
-      <h1>Hello {{ Pass.name }}</h1>
-  <label for="Field">Starting Location:</label>
-  <input type="text " id="Field" placeholder="Enter your Field">
-  <label for="SLocation">Starting Location:</label>
-  <input type="text " id="SLocation" placeholder="Enter your stating location">
+
+  <select name= "UserInfo" method="GET" action="/Booking">
+      {% for info in user.values()%}
+          <option value= "{{info.id}}" SELECTED>{{info.name}}</option>"
+      {% endfor %}
+  </select><br>
+
+  <label for="Field">Field:</label>
+  <input type="text " id="Field" name = "Field" placeholder="Enter your Field"><br>
+  <label for="SLocation">Start Location:</label>
+  <input type="text " id="SLocation" name = "SLocation" placeholder="Enter your stating location"><br>
   <label for="ELocation">Ending Location:</label>
-  <input type="text " id="ELocation" placeholder="Enter your Destination">
+  <input type="text " id="ELocation" name = "ELocation" placeholder="Enter your Destination"><br>
+  <label for="LuggageSize">Luggage weight (kg):</label>
+  <input type="number " id="LuggageSize"  Name = "LuggageSize" placeholder="Enter your weight of Luggage"><br>
+  <label for="DistanceLimit">Distance Limit(meter):</label>
+  <input type="number " id="DistanceLimit"  Name = "DistanceLimit" placeholder="Enter your Distance Limit"><br>
+
+  <h6>Car Type :</h6><br>
+  <label for="CarT">Car</label>
+  <input type="radio" id="CarT" name="CarType" value="Car"><br>
+    <label for="TruckT">Truck</label>
+    <input type="radio" id="TruckT" name="CarType" value="Truck"><br>
+
+  <h6>Share or Not:</h6><br>
+    <label for="ShareY">Yes</label>
+    <input type="radio" id="ShareY" name="Sharable" value="Y"><br>
+    <label for="ShareN">No</label>
+    <input type="radio" id="ShareN" name="Sharable" value="N"><br>
+
 
   <input type="submit" id="TransactionForm" name="BookButton"
          style="width:47%;" class="w3-bar-item w3-button w3-padding-medium w3-blue" \></form>
