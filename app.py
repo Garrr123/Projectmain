@@ -56,6 +56,24 @@ def gotoBook():
     global customer_dict
     return render_template('Book.html' , user = customer_dict , driver = driver_dict)
 
+@app.route("/gotoTransaction")
+def gotoTransaction():
+    global driver_dict
+    global customer_dict
+    return render_template('Transaction.html')
+
+@app.route("/gotoJourney")
+def gotoJourney():
+    global driver_dict
+    global customer_dict
+    return render_template('Journey.html')
+
+@app.route("/gotoEmpty")
+def gotoEmpty():
+    global driver_dict
+    global customer_dict
+    return render_template('Empty.html')
+
 
 @app.route("/Booking", methods=['POST' , 'GET'])
 def BookPage():
