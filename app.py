@@ -320,7 +320,6 @@ def book(user_id, start, end, cartype, seats=1, luggage_req=0, sharing=False, di
     return True
 
 def displayJourney(id,journey_dict):
-
     selected = journey_dict[int(id)]
     journey = {}
     sentence = ",".join([busy_customer[i].name for i in selected.user_id])
@@ -334,7 +333,7 @@ def displayJourney(id,journey_dict):
     journey['sharing'] = selected.sharing
     journey['luggage_weight'] = selected.luggage_weight
     journey['seats'] = selected.seats
-    journey['seats'] = selected.map
+    journey['map'] = selected.map
     journey['driver_location'] = selected.driver_location
     journey['distance'] = selected.dist
     journey['time'] = selected.time
