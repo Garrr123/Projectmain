@@ -82,7 +82,7 @@ def gotoEmpty():
 
     return render_template('Empty.html')
 
-@app.route("/completeSharing" , methods=['POST'])
+@app.route("/completeSharing" , methods=['POST','GET'])
 def completeSharing():
 
     global sharing_journey
@@ -93,7 +93,7 @@ def completeSharing():
     return render_template('Journey.html', rideType="1", journey_dict=sharing_journey)
 
 
-@app.route("/completeLone", methods=['POST'])
+@app.route("/completeLone", methods=['POST','GET'])
 def completeLone():
 
     global sharing_journey
@@ -157,7 +157,7 @@ def BookPage():
 
 
     if isinstance(results, bool):
-        if sharing and results:
+        if sharing and results and len(journey_choice) > 1:
            #create an array here :3
            FormattedArr = []
            #for i in range (1 , len(journey_choice) - 1):
@@ -173,11 +173,14 @@ def BookPage():
 @app.route("/BookShared", methods=['POST'])
 def BookShared():
     index = request.form.get("accept")
-    close = request.form.get("close")
+    #close = request.form.get("close")
 
     print("testing purpose")
     print(index)
-    print(close)
+
+    sharing_choice(int(index))
+    return render_template('main.html')
+
 
 
     return render_template('Journey.html', rideType="0", journey_dict=lone_journey )
@@ -354,9 +357,9 @@ def complete(journey_id, sharing):
   journey = None
 
   if sharing:
-    journey = sharing_journey.pop(journey_id)
+    journey = sharing_journey.pop(int(journey_id))
   else :
-    journey = lone_journey.pop(journey_id)
+    journey = lone_journey.pop(int(journey_id))
 
   if journey == None:
     return False
@@ -380,9 +383,11 @@ def sharing_choice(index):
       busy_driver[journey.driver_id] = driver_dict.pop(journey.driver_id)
       sharing_journey[journey.id] = journey_choice[0]
   else:
+    busy_customer[journey.user_id[-1]] = customer_dict.pop(journey.user_id[-1])
     for i in sharing_journey.values():
       if i.driver_id == journey.driver_id:
         sharing_journey.pop(i.id)
+        break
     sharing_journey[journey.id] = journey
 
 
