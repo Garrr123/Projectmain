@@ -1,9 +1,10 @@
 from flask import Flask, request, json, flash
 from flask import render_template
-
+from io import StringIO
 from AppObjects import *
 import random
-
+from base64 import b64encode
+import os
 
 random.seed(42)
 
@@ -337,7 +338,10 @@ def displayJourney(id,journey_dict):
     journey['sharing'] = selected.sharing
     journey['luggage_weight'] = selected.luggage_weight
     journey['seats'] = selected.seats
-    journey['map'] = selected.map
+
+    selected.map.save("map.png")
+    journey['map'] = "map.png"
+
     journey['driver_location'] = selected.driver_location
     journey['distance'] = selected.dist
     journey['time'] = selected.time
@@ -392,3 +396,12 @@ def sharing_choice(index):
 
 
   return True
+
+def serve_pil_image(pil_img):
+
+    img_io = BytesIO()
+    pil_img.save(img_io, 'jpeg', quality=100)
+    img_io.seek(0)
+    img = b64encode(img_io.getvalue()).decode('ascii')
+    img_tag = f'<img src="data:image/jpg;base64,{img}" class="img-fluid"/>'
+    return img_tag
