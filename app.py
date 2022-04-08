@@ -78,6 +78,8 @@ def gotoEmpty():
 @app.route("/Booking", methods=['POST' , 'GET'])
 def BookPage():
 
+
+
     global lone_journey
     global journey_No
     global driver_dict
@@ -99,13 +101,15 @@ def BookPage():
     Sharable = request.form.get("Sharable")
     Seat_Number = request.form.get("Seat")
 
+
     print(name ,field, S_Location, E_Location, Luggage_Size, Limit, Car_Type, Sharable,Seat_Number)
     print("Thank you")
     sharing = True if Sharable == "Y" else False
-    c = 0 if Limit is None else float(Limit)
-    results = book( name, S_Location, E_Location, Car_Type, int(Seat_Number), float(Luggage_Size), sharing,float(Limit))
+    Limit = 0.0 if Limit == "" else float(Limit)
+    Luggage_Size = 0.0 if Luggage_Size == "" else float(Luggage_Size)
+    results = book( name, S_Location, E_Location, Car_Type, int(Seat_Number), Luggage_Size, sharing , Limit)
 
-    lone_journey[list(lone_journey.keys())[0]].display()
+
 
     if isinstance(results, bool):
         if sharing and results:
