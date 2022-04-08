@@ -105,7 +105,7 @@ def BookPage():
     print(name ,field, S_Location, E_Location, Luggage_Size, Limit, Car_Type, Sharable,Seat_Number)
     print("Thank you")
     sharing = True if Sharable == "Y" else False
-    Limit = 0.0 if Limit == "" else float(Limit)
+    Limit = 300.0 if Limit == "" else float(Limit)
     Luggage_Size = 0.0 if Luggage_Size == "" else float(Luggage_Size)
     results = book( name, S_Location, E_Location, Car_Type, int(Seat_Number), Luggage_Size, sharing , Limit)
 
