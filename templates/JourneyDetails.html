@@ -79,32 +79,69 @@
         .show {display: block;}
     </style>
 
-
   </head>
   <body>
-    <h2 class="mx-auto" style="width: max-content;">Booking page</h2>
-    <div class="container-fluid">
+    <h2 class="mx-auto" style="width: max-content;">view journey details</h2>
+    <div class="container">
       <form action="/Booking" method="post">
-          <label for="country">Country:</label>
-  <input type="text" id="" name="country" value="Norway" readonly><br><br>
-            <label for="country">Country:</label>
-  <input type="text" id="country" name="country" value="Norway" readonly><br><br>
-            <label for="country">Country:</label>
-  <input type="text" id="country" name="country" value="Norway" readonly><br><br>
-            <label for="country">Country:</label>
-  <input type="text" id="country" name="country" value="Norway" readonly><br><br>
-            <label for="country">Country:</label>
-  <input type="text" id="country" name="country" value="Norway" readonly><br><br>
-            <label for="country">Country:</label>
-  <input type="text" id="country" name="country" value="Norway" readonly><br><br>
-            <label for="country">Country:</label>
-  <input type="text" id="country" name="country" value="Norway" readonly><br><br>
-            <label for="country">Country:</label>
-  <input type="text" id="country" name="country" value="Norway" readonly><br><br>
-            <label for="country">Country:</label>
-  <input type="text" id="country" name="country" value="Norway" readonly><br><br>
-
-
+        <div class="mb-3">
+          <label for="country" class="form-label">Journey ID:</label>
+          <input class="form-control" type="text" id="journey" name="journey" value="{{journey['journey_id']}}" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="country" class="form-label">Customer:</label>
+          <input class="form-control" type="text" id="country" name="country" value="{{journey['customer']}}" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="country" class="form-label">Driver Name:</label>
+          <input class="form-control" type="text" id="country" name="country" value="{{journey['driver_name']}}" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="country" class="form-label">Driver Id:</label>
+          <input class="form-control" type="text" id="country" name="country" value="{{journey['driver_id']}}" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="country" class="form-label">Car Type:</label>
+          <input class="form-control" type="text" id="country" name="country" value="{{journey['cartype']}}" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="country" class="form-label">Start:</label>
+          <input class="form-control" type="text" id="country" name="country" value="{{journey['start']}}" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="country" class="form-label">End:</label>
+          <input class="form-control" type="text" id="country" name="country" value="{{journey['end']}}" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="country" class="form-label">Sharing:</label>
+          <input class="form-control" type="text" id="country" name="country" value="{{journey['sharing']}}" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="country" class="form-label">Luggage Weight:</label>
+          <input class="form-control" type="text" id="country" name="country" value="{{journey['luggage_weight']}}" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="country" class="form-label">seats:</label>
+          <input class="form-control" type="text" id="country" name="country" value="{{journey['seats']}}" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="country" class="form-label">Driver Location:</label>
+          <input class="form-control" type="text" id="country" name="country" value="{{journey['driver_location']}}" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="country" class="form-label">Distance:</label>
+          <input class="form-control" type="text" id="country" name="country" value="{{journey['distance']}}" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="country" class="form-label">time:</label>
+          <input class="form-control" type="text" id="country" name="country" value="{{journey['time']}}" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="country" class="form-label">map:</label>
+          <div>
+            <img class="rounded mx-auto d-block" style="width: 500px;" src="../static/map.png" alt="grabcar pic" >
+          </div>
+        </div>
       </form>
     </div>
 
