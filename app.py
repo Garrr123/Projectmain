@@ -339,8 +339,8 @@ def displayJourney(id,journey_dict):
     journey['luggage_weight'] = selected.luggage_weight
     journey['seats'] = selected.seats
 
-    selected.map.save("map.png")
-    journey['map'] = "map.png"
+    selected.map.save("static\map.png")
+    journey['map'] = "static\map.png"
 
     journey['driver_location'] = selected.driver_location
     journey['distance'] = selected.dist
