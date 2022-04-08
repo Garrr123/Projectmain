@@ -35,15 +35,35 @@ tr:nth-child(even) {
 </head>
 <body>
 <h2>Busy User</h2>
-    <table class ="statusTable">
+    <table class ="busyTable">
         <thead>
         <tr>
             <th>UserID</th>
         </tr>
+        <tr>
+            <td><span id = "result"></span></td>
+        </tr>
         </thead>
-        <tbody id ="result"></tbody>
+        <tbody></tbody>
     </table>
 
+<h2>Avaliable User</h2>
+    <table class ="avaliableTable">
+        <thead>
+        <tr>
+            <th>UserID</th>
+        </tr>
+        <tr>
+
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+
+    <script>
+        document.getElementById("result").innerHTML = localStorage.getItem("UserInfovalue");
+    </script>
 
 
     <script>
