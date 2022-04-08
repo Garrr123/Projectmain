@@ -74,13 +74,13 @@ def gotoJourney():
     else:
         return render_template('Journey.html', rideType="0", journey_dict=lone_journey)
 
-@app.route("/gotoEmpty")
-def gotoEmpty():
+@app.route("/gotoUser")
+def gotoUser():
 
     global driver_dict
     global customer_dict
 
-    return render_template('Empty.html')
+    return render_template('User.html')
 
 @app.route("/completeSharing" , methods=['POST','GET'])
 def completeSharing():

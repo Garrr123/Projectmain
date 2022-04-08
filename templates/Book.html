@@ -79,6 +79,18 @@
         .show {display: block;}
     </style>
 
+    <script>
+      function callUserName(){
+         var dropdown = document.getElementById("UserInfo").value;
+         dropdown.onclick = function(){
+          var select = document.getElementById("TransactionForm");
+          userID = select[select.selectedIndex].value;
+        }
+      localStorage.setItem("UserInfovalue", dropdown)
+    }
+
+    </script>
+
 
   </head>
   <body>
@@ -131,7 +143,9 @@
           <label for="ShareN" class="form-check-label" checked>No</label>
           <input type="radio" id="ShareN" name="Sharable" value="N" class="form-check-input" checked>
         </div>
-          <button type="submit" id="TransactionForm" class="btn btn-primary">BookButton</button>
+        <form action = "User.html">
+          <button type="submit" id="TransactionForm" class="btn btn-primary" onclick = "callUserName();" >BookButton</button>
+        </form>
       
       </form>
     </div>
