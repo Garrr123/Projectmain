@@ -158,28 +158,29 @@ def BookPage():
 
     if isinstance(results, bool):
         if sharing and results:
-            ## POP UP Here
-
-            #your table is formed from journey_choice , a global list
-            ## journey.user_id[-1] , this is the latest customer id , use this to get customer name from  customer dict
-            ## journey.driver_id, the driver id , use this to get driver name from busy driver dict
-            ## start from index 1 of the list
-            ## the accept button value is the list index
-            ## The amount of rows is len(journey_choice) -1 .
-            """
-            for i in journey_choice[1:]:
-                customer_name = customer_dict[i.user_id[-1]]
-                driver_name = busy_driver[i.driver_id]
-                print(customer_name ,driver_name , "accept " )
-            """
-
-
-            return render_template('Main.html')
+           #create an array here :3
+           FormattedArr = []
+           #for i in range (1 , len(journey_choice) - 1):
+               #print("Checking here")
+               #FormattedArr[0] = journey_choice[i + 1].driver_id
+           print(journey_choice)
+           return render_template("ShowSharing.html" ,  JourneyChoice = journey_choice[:] , len = len(journey_choice))
     else:
         ## errors
         print(results)
     return render_template('Main.html')
 
+@app.route("/BookShared", methods=['POST'])
+def BookShared():
+    index = request.form.get("accept")
+    close = request.form.get("close")
+
+    print("testing purpose")
+    print(index)
+    print(close)
+
+
+    return render_template('Journey.html', rideType="0", journey_dict=lone_journey )
 
 
 def book(user_id, start, end, cartype, seats=1, luggage_req=0, sharing=False, distance_limit=300):
@@ -320,7 +321,6 @@ def book(user_id, start, end, cartype, seats=1, luggage_req=0, sharing=False, di
     return True
 
 def displayJourney(id,journey_dict):
-
     selected = journey_dict[int(id)]
     journey = {}
     sentence = ",".join([busy_customer[i].name for i in selected.user_id])
@@ -334,7 +334,7 @@ def displayJourney(id,journey_dict):
     journey['sharing'] = selected.sharing
     journey['luggage_weight'] = selected.luggage_weight
     journey['seats'] = selected.seats
-    journey['seats'] = selected.map
+    journey['map'] = selected.map
     journey['driver_location'] = selected.driver_location
     journey['distance'] = selected.dist
     journey['time'] = selected.time
