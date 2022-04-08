@@ -121,7 +121,7 @@ def viewLone():
     journey = displayJourney(journey_id,lone_journey)
 
 
-    return render_template('journeyDetails.html', rideType="1", journey=journey)
+    return render_template('journeyDetails.html', rideType="0", journey=journey)
 
 @app.route("/Booking", methods=['POST', 'GET'])
 def BookPage():
