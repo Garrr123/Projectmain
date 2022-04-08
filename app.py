@@ -108,22 +108,7 @@ def viewSharing():
     global busy_customer
     global sharing_journey
     journey_id = request.form.get("view_journey")
-    selected = sharing_journey[int(journey_id)]
-    journey = {}
-    sentence  = ",".join([busy_customer[i].name  for i in selected.user_id])
-    journey["customer"] = sentence
-    journey['driver_name'] = busy_driver[selected.driver_id].name
-    journey['driver_id'] = selected.driver_id
-    journey['cartype'] = selected.cartype
-    journey['start'] = selected.start
-    journey['end'] = selected.end
-    journey['sharing'] = selected.sharing
-    journey['luggage_weight'] = selected.luggage_weight
-    journey['seats'] = selected.seats
-    journey['seats'] = selected.map
-    journey['driver_location'] = selected.driver_location
-    journey['distance'] = selected.dist
-    journey['time'] = selected.time
+    journey = displayJourney(journey_id, sharing_journey)
     return render_template('journeyDetails.html', rideType="1", journey=journey)
 
 @app.route("/viewLone", methods=['GET'])
@@ -132,24 +117,11 @@ def viewLone():
     global busy_customer
     global lone_journey
     journey_id = request.form.get("view_journey")
-    selected = lone_journey[int(journey_id)]
-    journey = {}
-    sentence  = ",".join([busy_customer[i].name  for i in selected.user_id])
-    journey["customer"] = sentence
-    journey['driver_name'] = busy_driver[selected.driver_id].name
-    journey['driver_id'] = selected.driver_id
-    journey['cartype'] = selected.cartype
-    journey['start'] = selected.start
-    journey['end'] = selected.end
-    journey['sharing'] = selected.sharing
-    journey['luggage_weight'] = selected.luggage_weight
-    journey['seats'] = selected.seats
-    journey['seats'] = selected.map
-    journey['driver_location'] = selected.driver_location
-    journey['distance'] = selected.dist
-    journey['time'] = selected.time
 
-    return render_template('journeyDetails.html', rideType="1", journey=journey)
+    journey = displayJourney(journey_id,lone_journey)
+
+
+    return render_template('journeyDetails.html', rideType="0", journey=journey)
 
 @app.route("/Booking", methods=['POST', 'GET'])
 def BookPage():
@@ -347,6 +319,26 @@ def book(user_id, start, end, cartype, seats=1, luggage_req=0, sharing=False, di
     print("end")
     return True
 
+def displayJourney(id,journey_dict):
+
+    selected = journey_dict[int(id)]
+    journey = {}
+    sentence = ",".join([busy_customer[i].name for i in selected.user_id])
+    journey['journey_id'] = selected.id
+    journey["customer"] = sentence
+    journey['driver_name'] = busy_driver[selected.driver_id].name
+    journey['driver_id'] = selected.driver_id
+    journey['cartype'] = selected.cartype
+    journey['start'] = selected.start
+    journey['end'] = selected.end
+    journey['sharing'] = selected.sharing
+    journey['luggage_weight'] = selected.luggage_weight
+    journey['seats'] = selected.seats
+    journey['seats'] = selected.map
+    journey['driver_location'] = selected.driver_location
+    journey['distance'] = selected.dist
+    journey['time'] = selected.time
+    return journey
 
 
 def complete(journey_id, sharing):
