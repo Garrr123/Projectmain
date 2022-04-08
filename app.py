@@ -1,5 +1,6 @@
 from flask import Flask, request, json, flash
 from flask import render_template
+
 from AppObjects import *
 import random
 
@@ -11,7 +12,6 @@ app.debug = True
 
 customer_dict = {}
 driver_dict  = {}
-journey_dict  = {}
 journey_No = 0
 amk_graph = {}
 busy_customer = {}
@@ -62,24 +62,97 @@ def gotoTransaction():
     global customer_dict
     return render_template('Transaction.html')
 
-@app.route("/gotoJourney")
+@app.route("/gotoJourney", methods=['POST' ,'GET'])
 def gotoJourney():
-    global driver_dict
-    global customer_dict
-    return render_template('Journey.html')
+
+    global sharing_journey
+    global lone_journey
+
+    rideType = request.form.get("RideType")
+    if rideType == "1":
+        return render_template('Journey.html', rideType ="1",journey_dict = sharing_journey )
+    else:
+        return render_template('Journey.html', rideType="0", journey_dict=lone_journey)
 
 @app.route("/gotoEmpty")
 def gotoEmpty():
+
     global driver_dict
     global customer_dict
+
     return render_template('Empty.html')
 
+@app.route("/completeSharing" , methods=['POST'])
+def completeSharing():
 
-@app.route("/Booking", methods=['POST' , 'GET'])
+    global sharing_journey
+    global lone_journey
+    journey_id = request.form.get("complete_journey")
+    complete(int(journey_id), True)
+
+    return render_template('Journey.html', rideType="1", journey_dict=sharing_journey)
+
+
+@app.route("/completeLone", methods=['POST'])
+def completeLone():
+
+    global sharing_journey
+    global lone_journey
+    journey_id = request.form.get("complete_journey")
+    complete(int(journey_id), False)
+    return render_template('Journey.html', rideType="0", journey_dict=lone_journey )
+
+@app.route("/viewSharing", methods=['GET'])
+def viewSharing():
+    global busy_driver
+    global busy_customer
+    global sharing_journey
+    journey_id = request.form.get("view_journey")
+    selected = sharing_journey[int(journey_id)]
+    journey = {}
+    sentence  = ",".join([busy_customer[i].name  for i in selected.user_id])
+    journey["customer"] = sentence
+    journey['driver_name'] = busy_driver[selected.driver_id].name
+    journey['driver_id'] = selected.driver_id
+    journey['cartype'] = selected.cartype
+    journey['start'] = selected.start
+    journey['end'] = selected.end
+    journey['sharing'] = selected.sharing
+    journey['luggage_weight'] = selected.luggage_weight
+    journey['seats'] = selected.seats
+    journey['seats'] = selected.map
+    journey['driver_location'] = selected.driver_location
+    journey['distance'] = selected.dist
+    journey['time'] = selected.time
+    return render_template('journeyDetails.html', rideType="1", journey=journey)
+
+@app.route("/viewLone", methods=['GET'])
+def viewLone():
+    global busy_driver
+    global busy_customer
+    global lone_journey
+    journey_id = request.form.get("view_journey")
+    selected = lone_journey[int(journey_id)]
+    journey = {}
+    sentence  = ",".join([busy_customer[i].name  for i in selected.user_id])
+    journey["customer"] = sentence
+    journey['driver_name'] = busy_driver[selected.driver_id].name
+    journey['driver_id'] = selected.driver_id
+    journey['cartype'] = selected.cartype
+    journey['start'] = selected.start
+    journey['end'] = selected.end
+    journey['sharing'] = selected.sharing
+    journey['luggage_weight'] = selected.luggage_weight
+    journey['seats'] = selected.seats
+    journey['seats'] = selected.map
+    journey['driver_location'] = selected.driver_location
+    journey['distance'] = selected.dist
+    journey['time'] = selected.time
+
+    return render_template('journeyDetails.html', rideType="1", journey=journey)
+
+@app.route("/Booking", methods=['POST', 'GET'])
 def BookPage():
-
-
-
     global lone_journey
     global journey_No
     global driver_dict
@@ -134,6 +207,7 @@ def BookPage():
         ## errors
         print(results)
     return render_template('Main.html')
+
 
 
 def book(user_id, start, end, cartype, seats=1, luggage_req=0, sharing=False, distance_limit=300):
@@ -272,6 +346,8 @@ def book(user_id, start, end, cartype, seats=1, luggage_req=0, sharing=False, di
 
     print("end")
     return True
+
+
 
 def complete(journey_id, sharing):
   global driver_dict
