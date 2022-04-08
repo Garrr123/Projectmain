@@ -78,8 +78,6 @@ def gotoEmpty():
 @app.route("/Booking", methods=['POST' , 'GET'])
 def BookPage():
 
-
-
     global lone_journey
     global journey_No
     global driver_dict
@@ -113,23 +111,7 @@ def BookPage():
 
     if isinstance(results, bool):
         if sharing and results:
-            ## POP UP Here
-
-            #your table is formed from journey_choice , a global list
-            ## journey.user_id[-1] , this is the latest customer id , use this to get customer name from  customer dict
-            ## journey.driver_id, the driver id , use this to get driver name from busy driver dict
-            ## start from index 1 of the list
-            ## the accept button value is the list index
-            ## The amount of rows is len(journey_choice) -1 .
-            """
-            for i in journey_choice[1:]:
-                customer_name = customer_dict[i.user_id[-1]]
-                driver_name = busy_driver[i.driver_id]
-                print(customer_name ,driver_name , "accept " )
-            """
-
-
-            return render_template('Main.html')
+            return render_template('ShowSharing.html' , JourneyC = journey_choice)
     else:
         ## errors
         print(results)
