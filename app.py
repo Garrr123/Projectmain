@@ -102,7 +102,7 @@ def completeLone():
     complete(int(journey_id), False)
     return render_template('Journey.html', rideType="0", journey_dict=lone_journey )
 
-@app.route("/viewSharing", methods=['GET'])
+@app.route("/viewSharing", methods=['GET','POST'])
 def viewSharing():
     global busy_driver
     global busy_customer
@@ -111,7 +111,7 @@ def viewSharing():
     journey = displayJourney(journey_id, sharing_journey)
     return render_template('journeyDetails.html', rideType="1", journey=journey)
 
-@app.route("/viewLone", methods=['GET'])
+@app.route("/viewLone", methods=['GET','POST'])
 def viewLone():
     global busy_driver
     global busy_customer
