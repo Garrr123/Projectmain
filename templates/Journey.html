@@ -78,8 +78,8 @@
 
   </head>
   <body>
-        <h2 class="mx-auto" style="width: 200px; margin-top:50px; margin-bottom: 200px;">Booking app</h2>
-        <div class="container-fluid">
+        <h2 class="mx-auto" style="width: 200px; margin-top:50px; margin-bottom: 100px;">Journey</h2>
+        <div class="container">
           <div class="row mt-1">
             <form action="/gotoJourney" class="col" style="display:grid" method="post">
               <button name="RideType"  class="btn btn-primary" value = "0">Standalone Rides </button>
@@ -90,54 +90,52 @@
           </div>
         </div>
         {% if rideType == "0" %}
-          <h3 class="mx-auto" style="width: 200px; margin-top:50px; margin-bottom: 200px;">Standalone Rides</h3>
+          <h3 class="mx-auto" style="width: 200px; margin-top:50px; margin-bottom: 20px;">Standalone Rides</h3>
         {% else %}
-          <h3 class="mx-auto" style="width: 200px; margin-top:50px; margin-bottom: 200px;">Shared Rides</h3>
+          <h3 class="mx-auto" style="width: 200px; margin-top:50px; margin-bottom: 20px;">Shared Rides</h3>
         {% endif %}
-      <table>
 
-
-
-      <thead>
-        <tr>
-          <th>Journey ID</th>
-          <th>View Details</th>
-          <th>Complete Journey</th>
-        </tr>
-      </thead>
-      <tbody>
-      {% for journey in journey_dict.values() %}
-          <tr>
-              <td>{{ journey.id }}</td>
-              <td>
-                {% if rideType == "0" %}
-                  <form action="/viewLone" method="post">
-                      <button name="view_journey"  type="submit" class="btn btn-primary" value = {{ journey.id}}>View details</button>
-                  </form>
-                {% else %}
-                  <form action="/viewSharing" method="post">
-                      <button name="view_journey"  type="submit" class="btn btn-primary" value = {{ journey.id}}>View details</button>
-                  </form>
-                {% endif %}
-              </td>
-              <td>
-                {% if rideType == "0" %}
-                  <form action="/completeLone" method="post">
-                      <button name="complete_journey"  type="submit" class="btn btn-primary" value = {{ journey.id}}>Complete Journey</button>
-                  </form>
-                {% else %}
-                  <form action="/completeSharing" method="post">
-                      <button name="complete_journey"  type="submit" class="btn btn-primary" value = {{ journey.id}}>Complete Journey</button>
-                  </form>
-                {% endif %}
-              </td>
-              <td>{{ prob }}</td>
-          </tr>
-      {% endfor %}
-      </tbody>
-      </table>
-
-        <div class="container-fluid">
+        <div class="container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Journey ID</th>
+                <th scope="col">View Details</th>
+                <th scope="col">Complete Journey</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for journey in journey_dict.values() %}
+                <tr>
+                    <th scope="row">{{ journey.id }}</th>
+                    <td>
+                      {% if rideType == "0" %}
+                        <form action="/viewLone" method="post">
+                            <button name="view_journey"  type="submit" class="btn btn-primary" value = {{ journey.id}}>View details</button>
+                        </form>
+                      {% else %}
+                        <form action="/viewSharing" method="post">
+                            <button name="view_journey"  type="submit" class="btn btn-primary" value = {{ journey.id}}>View details</button>
+                        </form>
+                      {% endif %}
+                    </td>
+                    <td>
+                      {% if rideType == "0" %}
+                        <form action="/completeLone" method="post">
+                            <button name="complete_journey"  type="submit" class="btn btn-primary" value = {{ journey.id}}>Complete Journey</button>
+                        </form>
+                      {% else %}
+                        <form action="/completeSharing" method="post">
+                            <button name="complete_journey"  type="submit" class="btn btn-primary" value = {{ journey.id}}>Complete Journey</button>
+                        </form>
+                      {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+        </div>
+        <div class="container" style="margin-top:50px; max-width:540px">
           <div class="row mt-1">
             <form action="/" class="col" style="display:grid">
               <button name="RideType"  class="btn btn-primary" value = "0">Home</button>

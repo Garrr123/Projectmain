@@ -95,19 +95,15 @@
   </head>
   <body>
     <h2 class="mx-auto" style="width: max-content;">Booking page</h2>
-    <div class="container-fluid">
+    <div class="container">
       <form action="/Booking" method="post">
         <div class="mb-3">
-          <select name= "info" id="UserInfo" method="GET" action="/">
+          <label for="UserInfo" class="form-label">Users:</label>
+          <select class="form-select" name= "info" id="UserInfo" method="GET" action="/">
             {% for info in user.values()%}
                 <option value = "{{info.user_id}}" SELECTED>{{info.name}}</option>"
             {% endfor %}
-        </select><br>
-        </div>
-        
-        <div class="mb-3">
-          <label for="Field" class="form-label">Field:</label>
-          <input type="text " class="form-control" id="Field" name = "Field" placeholder="Enter your Field">
+          </select>
         </div>
         <div class="mb-3">
           <label for="SLocation" class="form-label">Start Location:</label>
@@ -144,7 +140,7 @@
           <input type="radio" id="ShareN" name="Sharable" value="N" class="form-check-input" checked>
         </div>
         <form action = "User.html">
-          <button type="submit" id="TransactionForm" class="btn btn-primary" onclick = "callUserName();" >BookButton</button>
+          <button type="submit" id="TransactionForm" class="btn btn-primary" onclick = "callUserName();" >Book</button>
         </form>
       
       </form>

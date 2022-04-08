@@ -88,23 +88,30 @@
 
   </head>
   <body>
-        <form action = "/BookShared" method="post">
-        <table style="width:100%">
-          <tr class="TableRow">
-            <th>Driver Name</th>
-            <th>Customer Name</th>
-            <th></th>
+    <h2 class="mx-auto" style="width: max-content;">Share List</h2>
+    <div class="container">
+      <form action = "/BookShared" method="post">
+        <table style="width:100%" class="table">
+          <thead>
+            <tr class="TableRow">
+            <th scope="col">Driver Name</th>
+            <th scope="col">Customer Name</th>
+            <th scope="col"></th>
           </tr>
-           {% for i in range(1,len) %}
-          <tr>
-            <td>{{ JourneyChoice[i].driver_id }}</td>
-            <td>{{ JourneyChoice[i].user_id[-1] }}</td>
-            <th><button type="submit" name="accept" value= "{{i}}">Accept</button></th>
+          </thead>
+          <tbody>
+            {% for i in range(1,len) %}
+              <tr>
+                <td scope="row">{{ JourneyChoice[i].driver_id }}</td>
+                <td>{{ JourneyChoice[i].user_id[-1] }}</td>
+              <td><button type="submit" name="accept" value= "{{i}}" class="btn btn-success">Accept</button></td>
           </tr>
             {% endfor %}
+          </tbody>
+           
         </table>
-        <button type="submit" name="accept" value = "0">Close</button>
+        <button type="submit" name="accept" value = "0" class="btn btn-success">Close</button>
         </form>
-
+    </div>
   </body>
 </html>

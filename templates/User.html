@@ -34,24 +34,25 @@ tr:nth-child(even) {
 
 </head>
 <body>
-<h2>Busy User</h2>
-    <table class ="busyTable">
+    <div class="container">
+        <h2>Busy User</h2>
+    <table class ="busyTable table">
         <thead>
         <tr>
-            <th>UserID</th>
+            <th scope="col">UserID</th>
         </tr>
         <tr>
-            <td><span id = "result"></span></td>
+            <td scope="row"><span id = "result"></span></td>
         </tr>
         </thead>
         <tbody></tbody>
     </table>
 
 <h2>Avaliable User</h2>
-    <table class ="avaliableTable">
+    <table class ="avaliableTable table">
         <thead>
         <tr>
-            <th>UserID</th>
+            <th scope="col">UserID</th>
         </tr>
         <tr>
 
@@ -59,25 +60,10 @@ tr:nth-child(even) {
         </thead>
         <tbody></tbody>
     </table>
-
+    </div>
 
     <script>
         document.getElementById("result").innerHTML = localStorage.getItem("UserInfovalue");
-    </script>
-
-
-    <script>
-        const tbodyEl = document.querySelector("tbody");
-        function addInTable(){
-            e.preventDefault();
-            const username = document.getElementById("result").innerHTML = localStorage.getItem("UserInfovalue");
-            tbodyEl.innerHTML += '
-                <tr>
-                    <td> ${userID}</td>
-                    <td>${Status}</td>
-                </tr>
-            ';
-         }
     </script>
 
 </body>
